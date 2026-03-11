@@ -735,17 +735,18 @@ const auth = {
             console.log('Auth sucesso! User ID:', authData?.user?.id);
 
             if (authData?.user) {
-                // Tenta buscar as informações adicionais da tabela 'usuarios'
+                // Tenta buscar as informações adicionais da tabela 'usuarios' usando o ID do Supabase Auth
                 const { data: userData, error: dbError } = await dbClient
                     .from('usuarios')
                     .select('*')
-                    .eq('email', email)
+                    .eq('id', authData.user.id)
                     .single();
 
                 if (dbError || !userData) {
+                    console.error('Perfil não encontrado para o ID:', authData.user.id);
                     await dbClient.auth.signOut();
                     ui.showLoading(false);
-                    return ui.notify('Acesso negado. Sua conta não possui permissão ou foi removida.', 'error');
+                    return ui.notify('Acesso negado. Seu perfil não foi encontrado no sistema.', 'error');
                 }
 
                 const userProfile = userData;
@@ -787,9 +788,9 @@ const auth = {
             // 2. Criar na tabela 'usuarios'
             const { error: dbError } = await dbClient.from('usuarios').insert([{
                 id: authData.user.id,
-                email: email,
-                nome: name,
-                // A senha não é mais salva na tabela pública por segurança e privacidade
+                email: email.trim().toLowerCase(),
+                nome: name.trim(),
+                usuario_id: cpf.trim(), // Salvando o CPF/Matrícula
                 cargo: 'user'
             }]);
 
@@ -1120,13 +1121,16 @@ document.getElementById('loanForm')?.addEventListener('submit', async e => {
         // Abrir modal com os dados retornados pela RPC
         ui.openModal(data);
         ui.showPage('dashboard');
+    } catch (err) {
+        console.error(err);
+        ui.notify('Erro ao registrar retirada: ' + (err.message || 'Erro desconhecido'), 'error');
+    }
     ui.showLoading(false);
 
     // Sync to GitHub automatically after success
     try {
         console.log('--- AUTO-SYNC GITHUB ---');
         // Usando o PowerShell para rodar o script de sincronização
-        // Isso é feito em background para não travar a UI
     } catch (e) {
         console.warn('Sync failed', e);
     }
