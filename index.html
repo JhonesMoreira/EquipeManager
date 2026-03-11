@@ -98,6 +98,20 @@
 
     <!-- Main App Container -->
     <div id="appContainer">
+        <!-- Mobile Menu Header (Visible only on mobile) -->
+        <header class="mobile-header no-print">
+            <button id="mobileMenuBtn" class="mobile-menu-btn" onclick="ui.toggleSidebar()">
+                ☰
+            </button>
+            <div class="mobile-title">
+                <span>📦 EquipManager</span>
+            </div>
+            <div style="width: 40px;"></div> <!-- Spacer -->
+        </header>
+
+        <!-- Sidebar Overlay (To close sidebar on mobile) -->
+        <div id="sidebarOverlay" class="sidebar-overlay" onclick="ui.toggleSidebar(false)"></div>
+
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo">

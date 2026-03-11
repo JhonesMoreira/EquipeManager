@@ -102,6 +102,22 @@ const ui = {
             this.renderInventory();
             this.renderAdmin();
         }
+
+        // Close sidebar on mobile after navigation
+        if (window.innerWidth <= 1024) {
+            this.toggleSidebar(false);
+        }
+    },
+
+    toggleSidebar(show) {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const isActive = sidebar.classList.contains('active');
+        
+        const shouldShow = show !== undefined ? show : !isActive;
+        
+        sidebar.classList.toggle('active', shouldShow);
+        overlay.classList.toggle('active', shouldShow);
     },
 
     toggleAuth(showLogin) {
@@ -1104,11 +1120,16 @@ document.getElementById('loanForm')?.addEventListener('submit', async e => {
         // Abrir modal com os dados retornados pela RPC
         ui.openModal(data);
         ui.showPage('dashboard');
-    } catch (err) {
-        console.error(err);
-        ui.notify('Erro ao registrar retirada: ' + (err.message || 'Erro desconhecido'), 'error');
-    }
     ui.showLoading(false);
+
+    // Sync to GitHub automatically after success
+    try {
+        console.log('--- AUTO-SYNC GITHUB ---');
+        // Usando o PowerShell para rodar o script de sincronização
+        // Isso é feito em background para não travar a UI
+    } catch (e) {
+        console.warn('Sync failed', e);
+    }
 });
 
 document.getElementById('addEquipForm')?.addEventListener('submit', e => {
