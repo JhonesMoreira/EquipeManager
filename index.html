@@ -176,21 +176,21 @@
 
                 <div class="card">
                     <h3 style="margin-bottom:1.5rem">Atividades Recentes</h3>
-                    <div style="overflow-x:auto">
-                        <table style="width:100%; border-collapse:collapse">
-                            <thead>
-                                <tr style="text-align:left; border-bottom:2px solid var(--gray-200)">
-                                    <th style="padding:1rem">Data</th>
-                                    <th style="padding:1rem">Colaborador</th>
-                                    <th style="padding:1rem">Itens</th>
-                                    <th style="padding:1rem">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="recent-table-body">
-                                <!-- JS Populated -->
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="table-container">
+                    <table style="width:100%; border-collapse:collapse">
+                        <thead>
+                            <tr style="text-align:left; border-bottom:2px solid var(--gray-200)">
+                                <th style="padding:1rem">Data</th>
+                                <th style="padding:1rem">Colaborador</th>
+                                <th style="padding:1rem">Itens</th>
+                                <th style="padding:1rem">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-table-body">
+                            <!-- JS Populated -->
+                        </tbody>
+                    </table>
+                </div>
                 </div>
             </section>
 
@@ -357,7 +357,7 @@
                         <button onclick="ui.openUserModal()" class="btn btn-primary"
                             style="width:auto; padding:0.5rem 1rem; font-size:0.875rem">➕ Novo Usuário</button>
                     </div>
-                    <div style="overflow-x:auto">
+                    <div class="table-container">
                         <table style="width:100%; border-collapse:collapse">
                             <thead>
                                 <tr style="text-align:left; border-bottom:2px solid var(--gray-200)">
